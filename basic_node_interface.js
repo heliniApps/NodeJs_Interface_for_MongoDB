@@ -13,10 +13,28 @@ function findDocuments(db, callback){
 
 }
 
+function findSpecifiedDocs(db, findQuery, callback){
+
+    var collection = db.collection("tours");
+
+    collection.find(findQuery).toArray(function(error, docs){
+        console.log(docs);
+        callback;
+    })
+}
+
 MongoClient.connect(url, function(err, db){
     console.log("Connected successfully...");
 
     findDocuments(db, function(){
+        db.close();
+    })
+
+    findSpecifiedDocs(db, {"tourLength":2}, function(){
+        db.close();
+    })
+
+    findSpecifiedDocs(db, {"tourLength":{$gte:5}}, function(){
         db.close();
     })
 })
