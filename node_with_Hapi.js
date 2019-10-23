@@ -24,7 +24,24 @@ server.route(
                     reply(tours);
                 })
             }
+        },
 
+        {
+            method: 'GET',
+            path: '/api/tours/{package}',
+            config: { json:{ space:2 } },
+
+            handler: function(request, reply){
+
+                collections.find({"tourPackage":request.params.package}).toArray(function(err, tours){
+                    console.log("In first handler - find()");
+                    reply(tours);
+                })
+                /*collections.findOne({"tourName":request.params.name}, function(err, tour){
+                    console.log("Second handler - findOne()");
+                    reply(tour);
+                })*/
+            }
         }
     ]
 )
